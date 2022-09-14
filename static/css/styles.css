@@ -1,0 +1,46 @@
+/* CSS Document */
+
+.items_block {
+    border: solid 1px gray;
+    border-radius: 5px;
+    margin: auto;
+    padding: 10px;
+    width: 930px;
+    align-self: center;
+    position: relative;
+}
+
+.item_row {
+
+    border: solid 1px gray;
+    display: table;
+    margin: auto;
+    padding: 2px;
+}
+
+#item_name, #item_description, #item_price {
+    display: inline-block;
+    margin: auto;
+    padding: 0;
+}
+
+#item_name {
+    width: 200px;
+}
+
+#item_description {
+    width: 500px;
+}
+
+#item_price {
+    width: 100px;
+}
+
+.button_buy_item {
+    display: inline-block;
+    width: 100px;
+    text-align: center;
+}
+.button_buy_item:hover {
+    background: antiquewhite;
+}

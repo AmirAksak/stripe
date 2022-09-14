@@ -21,7 +21,7 @@ from pay_api.views import (
     SuccessView,
     CancelView,
     stripe_webhook,
-    StripeIntentView
+    StripeIntentView, BuyView, IndexView
 )
 
 urlpatterns = [
@@ -30,8 +30,9 @@ urlpatterns = [
     path('webhooks/stripe/', stripe_webhook, name='stripe-webhook'),
     path('cancel/', CancelView.as_view(), name='cancel'),
     path('success/', SuccessView.as_view(), name='success'),
-    path('', ProductLandingPageView.as_view(), name='landing-page'),
+    path('q', ProductLandingPageView.as_view(), name='landing-page'),
     path('create-checkout-session/<pk>/', CreateCheckoutSessionView.as_view(), name='create-checkout-session'),
-    path()
+    path('buy/<int:pk>', BuyView.as_view(), name='buy'),
+    path('', IndexView.as_view(), name='home'),
 ]
 

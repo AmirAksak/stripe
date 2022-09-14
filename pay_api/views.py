@@ -1,19 +1,93 @@
 # pay>pip install --target=c:\users\lesnid\desktop\python_lessons\pay\venv\lib\site-packages --upgrade stripe
+# https://raturi.in/blog/django-stripe-integration-fully-explained-example/
+# https://stripe.com/docs/testing#cards
 
 from django.shortcuts import render
 import stripe
 import json
 from django.core.mail import send_mail
 from django.conf import settings
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView, DetailView
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse, HttpResponse
 from django.views import View
-from .models import Product
 
+from pay.settings import BASE_DIR
+from .models import Product, Item
 
 public_key = settings.STRIPE_PUBLIC_KEY
 stripe.api_key = settings.STRIPE_SECRET_KEY
+
+
+def connect(id):
+    item = Item.objects.get(pk=id)
+    YOUR_DOMAIN = 'http://127.0.0.1:8000'
+    try:
+        checkout_session = stripe.checkout.Session.create(
+            payment_method_types=['card'],
+            #payment_method_types=['card', 'affirm'],
+            line_items=[
+                {
+                    'price_data': {
+                        'currency': 'usd',
+                        'unit_amount': int(item.price),
+                        'product_data': {
+                            'name': item.name,
+                        },
+                    },
+                    'quantity': 1,
+                },
+            ],
+            metadata={
+                "product_id": item.id
+            },
+            mode='payment',
+
+            success_url=YOUR_DOMAIN + '/success/',
+            cancel_url=YOUR_DOMAIN + '/cancel/',
+        )
+        print('Checkout_Session')
+        print(checkout_session)
+    except Exception as exc:
+        print('Ошибка', exc)
+
+
+class IndexView(ListView):
+    model = Item
+    template_name = 'index.html'
+    context_object_name = 'items'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+
+    def get_queryset(self):
+        return Item.objects.all()
+
+
+class BuyView(DetailView):
+    model = Item
+    template_name = 'buy.html'
+    context_object_name = 'item'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['item'] = Item.objects.get(pk=self.kwargs['pk'])
+        #context['item'] = Item.objects.get(pk=self.get_session_id())
+        connect(self.kwargs['pk'])
+        return context
+
+    def get_session_id(self, **kwargs):
+        item_pk = self.kwargs['pk']
+        item = Item.objects.get(pk=item_pk)
+
+        return item_pk
+
+
+
+
+
+#class
 
 
 class SuccessView(TemplateView):
@@ -44,7 +118,8 @@ class CreateCheckoutSessionView(View):
         product = Product.objects.get(id=product_id)
         YOUR_DOMAIN = "http://127.0.0.1:8000"
         checkout_session = stripe.checkout.Session.create(
-            payment_method_types=['card'],
+            # payment_method_types=['card'],
+            payment_method_types=['card', 'affirm'],
             line_items=[
                 {
                     'price_data': {
@@ -65,6 +140,7 @@ class CreateCheckoutSessionView(View):
             success_url=YOUR_DOMAIN + '/success/',
             cancel_url=YOUR_DOMAIN + '/cancel/',
         )
+        print('Покружились')
         print('id,', checkout_session.id)
         return JsonResponse({
             'id': checkout_session.id

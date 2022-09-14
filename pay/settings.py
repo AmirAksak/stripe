@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -116,7 +116,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'),]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -125,3 +126,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STRIPE_SECRET_KEY = 'sk_test_51LhgFhIShqJk3YNmJ6BiSaWF11XsIxsBcNjd7jahZREVQ6WNhfx7gQr6fqJTBMci5FFza0ORnuHaqmX97HgPXeDo001pI3G2kx'
 STRIPE_PUBLIC_KEY = 'pk_test_51LhgFhIShqJk3YNmBtlEZ4MXfmrXog8u30yCucQx0QqKT5SPaN1x1bOQTi7lLlfi5dyY3U7yXNIEG5kzgComCQjV00MEfrXZrj'
+ACCOUNT_CODE = 'acct_1LhgFhIShqJk3YNm'

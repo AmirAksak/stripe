@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <link type="text/css" href="{% static 'css/styles.css' %}" rel="stylesheet" />
+    <title>Title</title>
+</head>
+<body>
+Select item:
+<div class="items_block">
+{% for item in items %}
+    <div class="item_row">
+        <div id="item_name">{{ item.name }}</div>
+        <div id="item_description">{{ item.description }}</div>
+        <div id="item_price">{{ item.get_dollar_price|floatformat:2 }}</div>
+        <div class="button_buy_item"><a href="{{ item.get_absolute_url }}">Buy</a></div>
+    </div>
+{% endfor %}
+</div>
+Всего товаров: {{ items.count }}
+</body>
+</html>
