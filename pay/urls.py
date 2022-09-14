@@ -16,22 +16,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from pay_api.views import (
-    CreateCheckoutSessionView,
-    ProductLandingPageView,
     SuccessView,
     CancelView,
-    stripe_webhook,
-    StripeIntentView, BuyView, IndexView
+    BuyView, IndexView, create_checkout_session, webhook
 )
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('create-payment-intent/<pk>/', StripeIntentView.as_view(), name='create-payment-intent'),
-    path('webhooks/stripe/', stripe_webhook, name='stripe-webhook'),
     path('cancel/', CancelView.as_view(), name='cancel'),
     path('success/', SuccessView.as_view(), name='success'),
-    path('q', ProductLandingPageView.as_view(), name='landing-page'),
-    path('create-checkout-session/<pk>/', CreateCheckoutSessionView.as_view(), name='create-checkout-session'),
+    path('create-checkout-session/<int:pk>', create_checkout_session, name='checkout'),
+    path('webhooks/stripe/', webhook, name="webhook"),
     path('buy/<int:pk>', BuyView.as_view(), name='buy'),
     path('', IndexView.as_view(), name='home'),
 ]
