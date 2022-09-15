@@ -1,17 +1,40 @@
 /* CSS Document */
+* {
+    font-family: 'Verdana';
+}
+a {
+    text-decoration: none;
+    color: black;
+}
+
+a:hover, #checkout_button:hover {
+    color: white;
+    background: cornflowerblue;
+}
+
+#checkout_button {
+    align-self: center;
+    margin: auto;
+    display: block;
+    width: 100px;
+    height: 30px;
+    border-radius: 4px;
+    border: 0;
+}
+
 
 .items_block {
     border: solid 1px gray;
     border-radius: 5px;
-    margin: auto;
+    margin: 50px auto;
     padding: 10px;
-    width: 930px;
+    width: 920px;
     align-self: center;
     position: relative;
+    display: block;
 }
 
 .item_row {
-
     border: solid 1px gray;
     display: table;
     margin: auto;
@@ -25,22 +48,18 @@
 }
 
 #item_name {
-    width: 200px;
+    width: 250px;
 }
 
 #item_description {
-    width: 500px;
+    width: 550px;
 }
 
 #item_price {
     width: 100px;
 }
 
-.button_buy_item {
+.left_column {
+    width: 200px;
     display: inline-block;
-    width: 100px;
-    text-align: center;
-}
-.button_buy_item:hover {
-    background: antiquewhite;
 }

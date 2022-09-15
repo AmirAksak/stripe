@@ -1,1 +1,7 @@
-Success!
+{%extends 'base.html'%}
+{%block content%}
+<div class="items_block">
+    Платёж прошёл успешно<br/>
+    <a href="{% url 'home' %}">Вернуться к списку товаров</a>
+</div>
+{%endblock content%}

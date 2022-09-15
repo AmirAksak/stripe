@@ -1,1 +1,7 @@
-Cancelled!
+{%extends 'base.html'%}
+{%block content%}
+<div class="items_block">
+    Платёж отменён<br/>
+    <a href="{% url 'home' %}">Вернуться к списку товаров</a>
+</div>
+{%endblock content%}

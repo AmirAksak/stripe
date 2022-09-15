@@ -24,6 +24,10 @@ SECRET_KEY = 'django-insecure-%0mkalqprnejc@8ags#k5kx#adz9du&tvfdl(2y%_av8z&+oqt
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+if DEBUG:
+    from pay.DEBUG_is_True import *
+else:
+    from pay.DEBUG_is_False import *
 
 ALLOWED_HOSTS = []
 
@@ -104,7 +108,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru-RU'
 
 TIME_ZONE = 'UTC'
 
@@ -117,7 +121,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'),]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

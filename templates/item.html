@@ -1,0 +1,36 @@
+{%extends 'base.html'%}
+{%block content%}
+<a href="{% url 'home' %}">Вернуться к списку товаров</a>
+<div class="items_block">
+    <div><label class="left_column">Товар:</label>{{item.name}}</div>
+    <div><label class="left_column">Описание товара:</label>{{item.description}}</div>
+    <div><label class="left_column">Цена:</label>{{item.get_dollar_price|floatformat:2}}</div>
+    <button type="button" id="checkout_button">BUY</button>
+</div>
+<a href="https://stripe.com/docs/testing#cards" target="_blank">Список тестовых карт</a>
+ <script type="text/javascript">
+  var stripe = Stripe('{{public_key}}');
+  var checkoutButton = document.getElementById('checkout_button');
+
+  checkoutButton.addEventListener('click', function() {
+
+    fetch('/buy/{{ item.pk }}', {
+      method: 'GET',
+    })
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(session) {
+      return stripe.redirectToCheckout({ sessionId: session.id });
+    })
+    .then(function(result) {
+      if (result.error) {
+        alert(result.error.message);
+      }
+    })
+    .catch(function(error) {
+      console.error('Error:', error);
+    });
+  });
+</script>
+{%endblock content%}
