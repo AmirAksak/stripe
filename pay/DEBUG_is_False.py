@@ -1,7 +1,7 @@
 #DEBUG = False
 ALLOWED_HOSTS = [
-        '127.0.0.1',
-        'localhost',
+        '185.185.68.147',
     ]
 
-STATIC_ROOT = ''
+STATIC_ROOT = '/home/lesnid/my_site/pay/static'
+DOMAIN = "http://185.185.68.147"
